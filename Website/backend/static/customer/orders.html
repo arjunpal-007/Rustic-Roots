@@ -1,0 +1,24 @@
+<h2>My Orders</h2>
+<div id="orders"></div>
+
+<script>
+fetch("/my-orders")
+.then(res => res.json())
+.then(data => {
+    const div = document.getElementById("orders");
+    if (data.length === 0) {
+        div.innerText = "No orders yet";
+        return;
+    }
+
+    data.forEach(o => {
+        div.innerHTML += `
+            <div style="border:1px solid #ccc;padding:10px;margin:10px">
+                <b>Order #${o.id}</b><br>
+                Total: ₹${o.total}<br>
+                Status: <b>${o.status}</b>
+            </div>
+        `;
+    });
+});
+</script>

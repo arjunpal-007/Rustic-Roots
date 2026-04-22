@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Products</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/customer/style.css">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-image: 
+    linear-gradient(rgba(255,255,255,.49), rgba(255,255,255,.25)),
+    url("/static/assets/bg.jpeg");
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar{
+  height:70px;
+  background:#2e7d32;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  flex-wrap: wrap; /* ✅ responsive add */
+}
+
+.nav-left img{
+  height:45px;
+}
+
+.nav-right{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.nav-right a{
+  color:white;
+  text-decoration:none;
+  margin-left:25px;
+  font-weight:500;
+}
+
+/* TITLE */
+.page-title{
+  text-align:center;
+  margin:40px 0;
+  font-size:30px;
+}
+
+/* GRID */
+.grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:30px;
+  padding:0 20px 60px 20px; /* ✅ spacing improve */
+}
+
+/* CARD */
+.card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,.08);
+  position:relative;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+.card img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-radius:16px;
+}
+
+.card h3{
+  margin:15px 0 5px;
+}
+
+.card p{
+  font-weight:bold;
+  color:#2e7d32;
+}
+
+/* BUTTON */
+.card button{
+  margin-top:10px;
+  background:#2e7d32;
+  color:white;
+  border:none;
+  padding:10px 22px;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+.badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #ff5722;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ================== MOBILE RESPONSIVE ================== */
+
+@media (max-width: 768px){
+
+  .navbar{
+    height:auto;
+    padding:15px;
+    flex-direction:column;
+  }
+
+  .nav-right{
+    margin-top:10px;
+    justify-content:center;
+  }
+
+  .nav-right a{
+    margin:8px 12px;
+  }
+
+  .page-title{
+    font-size:22px;
+  }
+
+  .card img{
+    height:200px;
+  }
+
+}
+
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/static/customer/index.html" class="logo-link">
+      <img src="/static/customer/logo.png">
+    </a>
+  </div>
+
+  <div class="nav-right" id="navLinks">
+    <a href="/static/customer/products.html">Products</a>
+    <a href="/static/customer/cart.html">Cart</a>
+    <a href="/static/customer/login.html">Login</a>
+  </div>
+</nav>
+
+<h2 class="page-title">🛍 All Products</h2>
+
+<div id="products" class="grid"></div>
+
+<script>
+
+const nav = document.getElementById("navLinks");
+const user = JSON.parse(localStorage.getItem("user"));
+
+fetch("/products")
+.then(res => res.json())
+.then(data => {
+
+  const box = document.getElementById("products");
+  box.innerHTML = "";
+
+  data.forEach(p => {
+
+    box.innerHTML += `
+      <div class="card">
+        ${p.is_best_seller ? `<span class="badge">🔥 Best Seller</span>` : ""}
+
+        <img src="/static/uploads/${p.image}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+
+        <a href="/static/customer/product.html?id=${p.id}">
+          <button>View More</button>
+        </a>
+      </div>
+    `;
+
+  });
+
+});
+
+if (user && user.name) {
+  nav.innerHTML = `
+    <span style="color:white;margin-right:15px;">
+      👋 Hi, <b>${user.name}</b>
+    </span>
+    <a href="/static/customer/products.html">Products</a>
+    <a href="/static/customer/cart.html">Cart</a>
+    <a href="#" onclick="logout()">Logout</a>
+  `;
+}
+
+function logout() {
+  localStorage.removeItem("user");
+  alert("Logged out successfully");
+  window.location.href = "/static/customer/login.html";
+}
+
+</script>
+
+</body>
+</html>

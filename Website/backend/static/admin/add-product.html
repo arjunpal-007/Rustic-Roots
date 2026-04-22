@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Product</title>
+<link rel="stylesheet" href="/static/admin/style.css">
+
+<style>
+ body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.35)),
+        url("/static/assets/bg.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+.navbar{
+  height:70px;
+  background:#2e7d32;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  color:white;
+}
+
+.navbar a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+}
+
+.form-box{
+  max-width:600px;
+  margin:50px auto;
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,.12);
+}
+
+.form-box h2{
+  text-align:center;
+  margin-bottom:30px;
+  color:#2e7d32;
+}
+
+.form-box input,
+.form-box textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+.form-box button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:#2e7d32;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* Checkbox Style */
+.checkbox-box{
+  display:flex;
+  align-items:center;
+  margin-bottom:20px;
+  font-weight:500;
+}
+
+.checkbox-box input{
+  width:auto;
+  margin-right:10px;
+  transform:scale(1.2);
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div>📦 Rustic Roots Admin</div>
+  <div>
+    <a href="/static/admin/orders.html">Orders</a>
+    <a href="/static/admin/products.html">Products</a>
+  </div>
+</nav>
+
+<div class="form-box">
+  <h2>Add Product</h2>
+
+ <form action="/add-product" method="POST" enctype="multipart/form-data">  
+
+
+    <input type="text" name="name" placeholder="Product Name" required>
+
+    <input type="number" name="price" placeholder="Price" required>
+
+    <textarea name="description" rows="4" placeholder="Description" required></textarea>
+
+    <input type="file" name="image" required>
+
+    <!-- 🔥 NEW CHECKBOX -->
+    <div class="checkbox-box">
+      <input type="checkbox" name="best_seller" value="true">
+      Mark as Best Seller 🔥
+    </div>
+
+    <button type="submit">Add Product</button>
+
+
+  </form>
+</div>
+
+</body>
+</html>

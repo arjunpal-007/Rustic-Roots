@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Orders</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI;
+  background:#f5f5f5;
+}
+
+.navbar{
+  height:70px;
+  background:#2e7d32;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  color:white;
+}
+
+.navbar a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+}
+
+.card{
+  max-width:1100px;
+  margin:40px auto;
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:900px;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+  text-align:left;
+}
+
+thead{
+  background:#e8f5e9;
+}
+
+button{
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.save{
+  background:#2e7d32;
+  color:white;
+}
+
+.logout{
+  background:#d32f2f;
+  color:white;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+  
+<div class="navbar">
+  <div>📦 Rustic Roots Admin</div>
+  <div>
+    <a href="/static/admin/orders.html">Orders</a>
+     <a href="/static/admin/add-product.html">Add Product</a>
+    <a href="/static/admin/products.html">Products</a>
+  </div>
+</nav>
+</div>
+
+<div class="card">
+
+<h3>Customer Orders</h3>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Address</th>
+<th>Total</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="ordersBody"></tbody>
+</table>
+
+<button class="logout" onclick="logout()">Logout</button>
+
+</div>
+
+<script>
+const tbody = document.getElementById("ordersBody");
+
+fetch("/admin/orders")
+.then(res => res.json())
+.then(data => {
+
+  if(data.length === 0){
+    tbody.innerHTML = "<tr><td colspan='6'>No orders found</td></tr>";
+    return;
+  }
+
+  data.forEach(o=>{
+    tbody.innerHTML += `
+    <tr>
+      <td>${o.id}</td>
+      <td>${o.name}</td>
+      <td>${o.phone}</td>
+      <td>${o.address}</td>
+      <td>₹${o.total}</td>
+      <td>${o.status}</td>
+    </tr>
+    `;
+  });
+
+});
+
+function logout(){
+  localStorage.removeItem("admin");
+  window.location.href = "/static/admin/login.html";
+}
+
+function logout() {
+    localStorage.removeItem("admin");
+    window.location.href = "/static/admin/login.html";
+}
+</script>
+
+</body>
+</html>
