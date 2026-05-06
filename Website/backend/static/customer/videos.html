@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos - Rustic Roots</title>
+  <link rel="stylesheet" href="/static/customer/style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8f1ed 100%);
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      height: 75px;
+      background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 25px rgba(46, 125, 50, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-left img {
+      height: 50px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-left img:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-right a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-right a:hover {
+      color: #a5d6a7;
+    }
+
+    .nav-right a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #a5d6a7;
+      transition: width 0.3s ease;
+    }
+
+    .nav-right a:hover::after {
+      width: 100%;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(165, 214, 167, 0.1) 100%);
+      border-bottom: 3px solid #2e7d32;
+    }
+
+    .page-title {
+      font-size: 42px;
+      margin: 0;
+      color: #1b5e20;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: #558b2f;
+      margin-top: 10px;
+      font-weight: 400;
+    }
+
+    /* GRID */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+    }
+
+    /* VIDEO CARD */
+    .video-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(46, 125, 50, 0.12);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+      cursor: pointer;
+    }
+
+    .video-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 60px rgba(46, 125, 50, 0.25);
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-info {
+      padding: 25px;
+    }
+
+    .video-info h3 {
+      margin: 0 0 12px 0;
+      color: #1b5e20;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .video-info p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .video-card:hover .play-icon {
+      opacity: 1;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: #1b5e20;
+      color: white;
+      margin-top: 60px;
+      font-size: 14px;
+    }
+
+    /* ================== MOBILE RESPONSIVE ================== */
+    @media (max-width: 768px) {
+      .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-direction: column;
+      }
+
+      .nav-left {
+        margin-bottom: 15px;
+      }
+
+      .nav-right {
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .nav-right a {
+        font-size: 13px;
+        margin: 5px 10px;
+      }
+
+      .page-header {
+        padding: 40px 20px;
+      }
+
+      .page-title {
+        font-size: 28px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .container {
+        padding: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/static/customer/index.html" class="logo-link">
+      <img src="/static/customer/logo.png">
+    </a>
+  </div>
+
+  <div class="nav-right" id="navLinks">
+    <a href="/static/customer/login.html">Login</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1 class="page-title">🎥 Our Videos</h1>
+  <p class="page-subtitle">Watch our beautiful skincare product demonstrations</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+  <div id="videos" class="grid">
+    <!-- Videos will be loaded here -->
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  © 2026 Rustic Roots | Natural Skincare
+</div>
+
+<script>
+const nav = document.getElementById("navLinks");
+const user = JSON.parse(localStorage.getItem("user"));
+
+// List of videos
+const videos = [
+  { 
+    name: "Product Showcase", 
+    file: "Test video rustic roots.mp4",
+    description: "Discover our complete range of natural skincare products"
+  }
+];
+
+const box = document.getElementById("videos");
+videos.forEach(v => {
+  box.innerHTML += `
+    <div class="video-card">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="/static/assets/videos/${v.file}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="play-icon">▶</div>
+      </div>
+      <div class="video-info">
+        <h3>${v.name}</h3>
+        <p>${v.description}</p>
+      </div>
+    </div>
+  `;
+});
+
+if (user && user.name) {
+  nav.innerHTML = `
+    <span style="color:white;margin-right:15px; font-weight: 600;">
+      👋 Hi, <b>${user.name}</b>
+    </span>
+    <a href="#" onclick="logout()">Logout</a>
+  `;
+}
+
+function logout() {
+  localStorage.removeItem("user");
+  alert("Logged out successfully");
+  window.location.href = "/static/customer/login.html";
+}
+</script>
+
+</body>
+</html>

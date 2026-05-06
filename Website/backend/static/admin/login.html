@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      min-height: 100vh;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,0.55),
+          rgba(255,255,255,0.35)
+        ),
+        url("/static/assets/bg.jpeg");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      width: 420px;
+      background: white;
+      padding: 35px 30px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      height: 60px;
+      mix-blend-mode: multiply;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2e7d32;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #2e7d32;
+      box-shadow: 0 0 0 2px rgba(46,125,50,0.15);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #2f7a3e, #4caf50);
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(47,122,62,0.35);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(47,122,62,0.45);
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    #msg {
+      text-align: center;
+      margin-top: 12px;
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="logo">
+      <img src="/static/customer/logo.png" alt="Rustic Roots">
+    </div>
+
+    <h2>Admin Login</h2>
+
+    <input id="email" type="email" placeholder="Admin Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="adminLogin()">Login</button>
+
+    <p id="msg"></p>
+  </div>
+
+  <script src="/static/admin/login.js"></script>
+</body>
+</html>

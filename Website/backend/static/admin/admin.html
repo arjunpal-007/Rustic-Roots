@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | Rustic Roots</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4faf5;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #2f7a3e;
+  color: white;
+  padding: 14px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+/* PAGE */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-btn { background: #2f7a3e; color: white; width:100%; }
+.edit-btn { background: #f39c12; color: white; }
+.delete-btn { background: #c0392b; color: white; }
+
+.product-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
+}
+.product-row img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.badge {
+  color: green;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <b>📦 Rustic Roots Admin</b>
+  <div>
+    <a href="/static/admin/products.html">Products</a>
+    <a href="/static/admin/orders.html">Orders</a>
+    <a href="/static/admin/add-best-seller.html">Add Best Seller</a>
+    <a href="/static/customer/login.html">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ADD PRODUCT -->
+<div class="card">
+<h2>Add Product</h2>
+<form method="POST" action="/admin/add-product" enctype="multipart/form-data">
+  <label>Name</label>
+  <input name="name" required>
+
+  <label>Price</label>
+  <input type="number" name="price" required>
+
+  <label>Description</label>
+  <textarea name="description" required></textarea>
+
+  <label>Image</label>
+  <input type="file" name="image" required>
+
+  <input type="checkbox" name="is_best_seller"> Mark as Best Seller
+
+
+  <button class="add-btn">Add Product</button>
+</form>
+</div>
+
+<!-- PRODUCT LIST -->
+<div class="card">
+<h2>All Products</h2>
+<div id="productList">Loading...</div>
+</div>
+
+</div>
+
+<script>
+// SUCCESS MESSAGE
+if (new URLSearchParams(location.search).get("success")) {
+  alert("✅ Product added successfully");
+}
+
+// LOAD PRODUCTS
+fetch("/admin/products")
+.then(res => res.json())
+.then(products => {
+  const box = document.getElementById("productList");
+  box.innerHTML = "";
+
+  products.forEach(p => {
+    box.innerHTML += `
+      <div class="product-row">
+        <img src="/static/uploads/${p.image}">
+        <div style="flex:1">
+          <b>${p.name}</b><br>
+          ₹${p.price}
+          ${p.is_best_seller ? "<span class='badge'> 🔥 Best Seller</span>" : ""}
+          <br>
+          <small>${p.description}</small>
+        </div>
+
+        <button class="edit-btn" onclick="editProduct(${p.id}, '${p.name}', ${p.price}, '${p.description}', ${p.is_best_seller})">
+          Edit
+        </button>
+
+        <button class="delete-btn" onclick="deleteProduct(${p.id})">
+          Delete
+        </button>
+      </div>
+    `;
+  });
+});
+
+function deleteProduct(id) {
+  if (!confirm("Delete product?")) return;
+  fetch("/admin/delete-product/" + id, { method: "DELETE" })
+    .then(() => location.reload());
+}
+
+function editProduct(id, name, price, desc, best) {
+  const newName = prompt("Name:", name);
+  const newPrice = prompt("Price:", price);
+  const newDesc = prompt("Description:", desc);
+  const isBest = confirm("Mark as Best Seller?");
+
+  fetch("/admin/edit-product/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: newName,
+      price: newPrice,
+      description: newDesc,
+      is_best_seller: isBest
+    })
+  }).then(() => location.reload());
+}
+</script>
+
+</body>
+</html>
