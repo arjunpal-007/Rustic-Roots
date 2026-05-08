@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials - Rustic Roots</title>
+  <link rel="stylesheet" href="/static/customer/style.css">
+  <style>
+    body { margin:0; font-family:'Segoe UI',sans-serif; background-image:url('https://rusticroots.store/wp-content/uploads/2026/02/Rustic-Roots-Home-Banner-Image.png'); background-size:cover; background-position:center top; background-attachment:fixed; background-color:#f4faf2; background-blend-mode:soft-light; color:#1b5e24; min-height:100vh; }
+    .header { background:rgba(255,255,255,0.96); border-bottom:1px solid rgba(0,0,0,0.08); position:sticky; top:0; z-index:1000; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+    .header-content { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:18px 24px; gap:20px; }
+    .logo { height:54px; }
+    .nav-menu { display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+    .nav-menu a { color:#1b5e24; text-decoration:none; font-weight:600; transition:color .25s; }
+    .nav-menu a:hover { color:#2e7d32; }
+    .page-header { max-width:1200px; margin:0 auto; padding:72px 24px 24px; text-align:center; }
+    .page-title { font-size:48px; margin-bottom:16px; color:#1b5e20; letter-spacing:-0.5px; }
+    .page-subtitle { max-width:700px; margin:0 auto; color:#4f6b4f; font-size:18px; line-height:1.75; }
+    .container { max-width:1200px; margin:0 auto; padding:40px 24px 80px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:28px; }
+    .testimonial-card { background:#fff; border-radius:24px; padding:28px; box-shadow:0 18px 40px rgba(46,125,50,0.12); transition:transform .3s; }
+    .testimonial-card:hover { transform:translateY(-6px); }
+    .testimonial-card .rating { font-size:20px; color:#f0b90b; margin-bottom:16px; }
+    .testimonial-card .comment { font-size:15px; color:#4f6b4f; line-height:1.8; margin-bottom:18px; }
+    .testimonial-card .name { font-weight:700; color:#1b5e20; margin-bottom:8px; }
+    .testimonial-card .designation { color:#7a8b72; font-size:14px; }
+    @media (max-width:720px) { .page-title { font-size:36px; } .header-content { flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="/" class="logo-link"><img src="/static/customer/logo.png" alt="Rustic Roots" class="logo"></a>
+      <nav class="nav-menu">
+        <a href="/">Home</a>
+        <a href="/videos">Videos</a>
+        <a href="/testimonials-page">Testimonials</a>
+        <a href="/reviews">Reviews</a>
+      </nav>
+    </div>
+  </header>
+  <section class="page-header">
+    <h1 class="page-title">💬 Testimonials</h1>
+  </section>
+  <main class="container" id="testimonials"></main>
+  <script>
+    const testimonials=[];
+    function renderTestimonials(){const box=document.getElementById('testimonials');box.innerHTML='';testimonials.forEach(t=>{box.innerHTML+=`<article class="testimonial-card"><div class="rating">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div><p class="comment">${t.comment}</p><div class="name">${t.name}</div><div class="designation">Verified Customer</div></article>`;});}
+    fetch('/api/testimonials').then(r=>r.json()).then(data=>{testimonials.push(...data);renderTestimonials();});
+  </script>
+  <footer style="background:transparent; color:#5c3f1d; text-align:center; padding:18px 0; margin-top:40px; font-size:0.95rem; letter-spacing:0.02em;">
+    <p style="margin:0;">&copy; 2026 Rustic Roots Copyright All Right Reserved | Designed & Developed By V B Global Services</p>
+  </footer>
+</body>
+</html>
+
+
+
+
+
+
