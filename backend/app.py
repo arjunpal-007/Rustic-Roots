@@ -2,8 +2,6 @@ from flask import Flask, redirect
 from flask_cors import CORS
 from config import Config
 from models import db
-from flask import render_template
-from routes.admin_routes import admin_routes
 from routes.product_routes import product_routes
 from routes.auth_routes import auth_routes
 from extensions import mail
@@ -32,7 +30,6 @@ app.config['MAIL_DEFAULT_SENDER'] = ''
 mail.init_app(app)
 
 # BLUEPRINTS
-app.register_blueprint(admin_routes)
 app.register_blueprint(product_routes)
 app.register_blueprint(auth_routes)
 

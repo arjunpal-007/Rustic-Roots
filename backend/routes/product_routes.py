@@ -432,26 +432,6 @@ def add_testimonial():
     return jsonify({"message": "Testimonial added"})
 
 
-    # 📦 ADMIN ORDERS
-@product_routes.route("/admin/orders")
-def admin_orders():
-    orders = Order.query.all()
-
-    return jsonify([
-        {
-            "id": o.id,
-            "name": o.name,
-            "phone": o.phone,
-            "address": o.address,
-            "total": o.total,
-            "status": o.status
-        }
-        for o in orders
-    ])
-
-
-
-
 @product_routes.route("/test-mail")
 def test_mail():
     msg = Message(
